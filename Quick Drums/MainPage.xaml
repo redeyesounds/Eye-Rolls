@@ -1,0 +1,187 @@
+﻿<Page
+    x:Class="Quick_Drums.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Quick_Drums"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:gaze="using:Microsoft.Toolkit.Uwp.Input.GazeInteraction"
+    gaze:GazeInput.Interaction="Enabled"
+    gaze:GazeInput.ThresholdDuration="00:00:00.01"
+    gaze:GazeInput.FixationDuration="00:00:00.0"
+    gaze:GazeInput.DwellDuration="00:00:00.01"
+    mc:Ignorable="d"
+    >
+    <Page.Resources>
+        <SolidColorBrush x:Key="l_low" Color="#ab6308" />
+        <SolidColorBrush x:Key="l_mid" Color="#dc7f0a" />
+        <SolidColorBrush x:Key="l_high" Color="#f59923" />
+        <SolidColorBrush x:Key="r_low" Color="#4c1d63" />
+        <SolidColorBrush x:Key="r_mid" Color="#6a288a" />
+        <SolidColorBrush x:Key="r_high" Color="#8933b2" />
+
+        <SolidColorBrush x:Key="l_b_low" Color="#492a03" />
+        <SolidColorBrush x:Key="l_b_mid" Color="#7a4706" />
+        <SolidColorBrush x:Key="l_b_high" Color="#ab6308" />
+        <SolidColorBrush x:Key="r_b_low" Color="#2e113b" />
+        <SolidColorBrush x:Key="r_b_mid" Color="#4c1d63" />
+        <SolidColorBrush x:Key="r_b_high" Color="#6a288a" />
+
+        <SolidColorBrush x:Key="r_b_blink" Color="#800f00" />
+        <SolidColorBrush x:Key="r_b_off" Color="#4d0900" />
+
+        <Color x:Key="b_off">#33000000</Color>
+        <Color x:Key="b_blink">#33FFFFFF</Color>
+
+        <Storyboard x:Name="comp_hit">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName = "l_low" Storyboard.TargetProperty="Color">
+                <LinearColorKeyFrame Value="{StaticResource b_blink}" KeyTime="00:00:00.02" />
+                <LinearColorKeyFrame Value="#ab6308" KeyTime="00:00:00.25" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Name="blink">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="background_color" Storyboard.TargetProperty="Color">
+                <LinearColorKeyFrame Value="{StaticResource b_blink}" KeyTime="00:00:00.02" />
+                <LinearColorKeyFrame Value="{StaticResource b_off}" KeyTime="00:00:00.25" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="r_blink">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="background_color" Storyboard.TargetProperty="Color">
+                <LinearColorKeyFrame Value="#b31500" KeyTime="00:00:00.02" />
+                <LinearColorKeyFrame Value="#4d0900" KeyTime="00:00:00.25" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+
+    </Page.Resources>
+
+    <Page.Background>
+        <SolidColorBrush x:Name="background_color" Color="#33000000" />
+    </Page.Background>
+
+    <SplitView IsPaneOpen="False" OpenPaneLength="540" DisplayMode="Overlay" Name="splitLeft" PaneOpening="SplitView_PaneOpening" PaneClosing="SplitView_PaneClosing"  PaneOpened="SplitView_PaneOpened" PaneBackground="{ThemeResource SystemControlAcrylicElementBrush  }">
+
+        <SplitView.Content>
+            <SplitView IsPaneOpen="False" DisplayMode="Overlay" Name="splitRight" PanePlacement="Right" PaneOpening="SplitView_PaneOpening" PaneClosing="SplitView_PaneClosing"  PaneOpened="SplitView_PaneOpened" PaneBackground="{ThemeResource SystemControlAcrylicElementBrush  }" >
+                <SplitView.Content>
+                    <Grid x:Name="LayoutRoot">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0"  Fill="{StaticResource l_b_high}" />
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0"  Fill="{StaticResource l_b_mid}" />
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="0"  Fill="{StaticResource l_b_low}" />
+                        <Rectangle x:Name="m_b_high" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="1"  Fill="{StaticResource l_b_high}" />
+                        <Rectangle x:Name="m_b_mid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1"  Fill="{StaticResource l_b_mid}" />
+                        <Rectangle x:Name="m_b_low" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="1"  Fill="{StaticResource l_b_low}" />
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="2"  Fill="{StaticResource r_b_high}" />
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="2"  Fill="{StaticResource r_b_mid}" />
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="2"  Fill="{StaticResource r_b_low}" />
+
+                        <Button x:Name="l_high" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="+" Click="OuterClick" Background="{StaticResource l_high}" Margin="10"/>
+                        <Button x:Name="l_mid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Content="+" Click="OuterClick" Background="{StaticResource l_mid}" Margin="10"/>
+                        <Button x:Name="l_low" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Content="+" Click="OuterClick" Background="{StaticResource l_low}" Margin="10"/>
+
+                        <Button x:Name="m_high" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Content="+" Click="InnerClick" Background="{StaticResource l_high}" Margin="10"/>
+                        <Button x:Name="m_mid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1"  Content="+" Click="InnerClick" Background="{StaticResource l_mid}" Margin="10"/>
+                        <Button x:Name="m_low" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="2"   Content="+" Click="InnerClick" Background="{StaticResource l_low}" Margin="10"/>
+
+                        <Button x:Name="r_high" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Content="+" Click="OuterClick" Background="{StaticResource r_high}" Margin="10"/>
+                        <Button x:Name="r_mid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="1" Content="+" Click="OuterClick" Background="{StaticResource r_mid}" Margin="10"/>
+                        <Button x:Name="r_low" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="2" Content="+" Click="OuterClick" Background="{StaticResource r_low}" Margin="10"/>
+
+                        <Button x:Name="o_left" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="3" FontSize="48" FontFamily="Segoe MDL2 Assets" Content="&#xE145;" Click="Open_Left" Margin="0, 0, 0, 0" gaze:GazeInput.DwellDuration="00:00:00.200" gaze:GazeInput.FixationDuration="00:00:00.150" />
+                        <Button x:Name="o_right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="3" FontSize="48" FontFamily="Segoe MDL2 Assets" Content="&#xE146;" Click="Open_Right" Margin="0, 0, 0, 0" gaze:GazeInput.DwellDuration="00:00:00.200" gaze:GazeInput.FixationDuration="00:00:00.150" />
+
+                        <StackPanel Grid.Row="3" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0, 20, 0, 20" HorizontalAlignment="Center" >
+                            <Button x:Name="g0" VerticalAlignment="Stretch" FontSize="36" FontFamily="Segoe MDL2 Assets" Content="&#xE15B;" Click="Stop_Click" Width="150" Margin="20, 0, 20, 0" gaze:GazeInput.DwellDuration="00:00:00.400" gaze:GazeInput.FixationDuration="00:00:00.350" />
+                            <Button x:Name="r" VerticalAlignment="Stretch" FontSize="36" FontFamily="Segoe MDL2 Assets" Content="&#xE1D2;" Click="Click_ClickTrack" Width="150" Margin="20, 0, 20, 0" gaze:GazeInput.DwellDuration="00:00:00.400" gaze:GazeInput.FixationDuration="00:00:00.350" />
+                        </StackPanel>
+
+                        <controls:InAppNotification x:Name="recordNotify" Background="{StaticResource SystemControlBaseMediumLowAcrylicElementMediumBrush}" FontSize="42" VerticalAlignment="Center" VerticalOffset="0" HorizontalOffset="-300" Grid.Column="0" Grid.Row="1" AnimationDuration="00:00:00.3" ShowDismissButton="False"></controls:InAppNotification>
+                    </Grid>
+                </SplitView.Content>
+                <SplitView.Pane>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="6*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center"  Text="You" FontSize="42"></TextBlock>
+                        <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <Button x:Name="user_kit" Background="{StaticResource SystemControlBackgroundBaseMediumLowBrush}" Content="Kit" Click="Change_Drum" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                            <Button x:Name="user_toms" Content="Toms" Click="Change_Drum" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                            <Button x:Name="user_cymbals" Content="Cymbals" Click="Change_Drum" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                        </StackPanel>
+
+                        <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Loop" FontSize="42" Grid.Column="1"></TextBlock>
+                        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <Button x:Name="loop_kit" Content="Kit" Click="Change_Drum" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                            <Button x:Name="loop_toms" Background="{StaticResource SystemControlBackgroundBaseMediumLowBrush}" Content="Toms" Click="Change_Drum" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                            <Button x:Name="loop_cymbals" Content="Cymbals" Click="Change_Drum" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                        </StackPanel>
+                        <ToggleSwitch x:Name="midiToggle" Header="Output Mode" OnContent="MIDI" OffContent="Audio" IsEnabled="False" IsOn="False" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Toggled="MidiToggle_Toggled" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                        <!--<ListBox x:Name="midiOutPortListBox" SelectionChanged="midiOutPortListBox_SelectionChanged" Grid.Row="2" Grid.ColumnSpan="2" />-->
+
+                    </Grid>
+                </SplitView.Pane>
+            </SplitView>
+
+        </SplitView.Content>
+        <SplitView.Pane>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="6*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center"  Text="Grooves" FontSize="42"></TextBlock>
+                <StackPanel x:Name="grooveButtons" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="1">
+                    <Button x:Name="g1" Content="1" Click="Toggle_Groove" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                    <Button x:Name="g2" Content="2" Click="Toggle_Groove" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                    <Button x:Name="g3" Content="3" Click="Toggle_Groove" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                    <Button x:Name="g4" Content="4" Click="Toggle_Groove" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" />
+                </StackPanel>
+                
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
+                    <Button x:Name="tempoAdd" Content="+" FontSize="48" Click="IncreaseTempo" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" gaze:GazeInput.MaxDwellRepeatCount="10"  gaze:GazeInput.RepeatDelayDuration="00:00:00.2" />
+                    <Slider x:Name="tempoSlider" ValueChanged="TempoSlider_ValueChanged" Minimum="40" Maximum="200" SnapsTo="Ticks" TickFrequency="5" Value="80" TickPlacement="BottomRight" HorizontalAlignment="Stretch" Orientation="Vertical" Height="220" Margin="10, 10, 10, 10" Width="50" ></Slider>
+                    <Button x:Name="tempominus" Content="-" FontSize="48" Click="DecreaseTempo" Height="100" HorizontalAlignment="Stretch"  Margin="10, 10, 10, 10" gaze:GazeInput.DwellDuration="00:00:00.3" gaze:GazeInput.FixationDuration="00:00:00.2" gaze:GazeInput.MaxDwellRepeatCount="10" gaze:GazeInput.RepeatDelayDuration="00:00:00.2" />
+                </StackPanel>
+
+                <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center"  Grid.Column="3" Text="Recordings" FontSize="42"></TextBlock>
+                <StackPanel x:Name="recordingButtons" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="3" Grid.Row="1">
+                    <TextBlock Text="Click the record button to record your first loop!" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10" TextAlignment="Center" />
+                </StackPanel>
+
+                <TextBlock x:Name="tempoVal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="3" Grid.Row="2" Text="Tempo: 120" FontSize="48"></TextBlock>
+                
+            </Grid>
+        </SplitView.Pane>
+        
+    </SplitView>
+    
+
+</Page>
